@@ -34,7 +34,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <ConfigurationType>Driver</ConfigurationType>
     <DriverType>KMDF</DriverType>
-    <DriverTargetPlatform>Universal</DriverTargetPlatform>
+    <DriverTargetPlatform>Windows Driver</DriverTargetPlatform>
     <Driver_SpectreMitigation>false</Driver_SpectreMitigation>
     <PlatformToolset>WindowsKernelModeDriver10.0</PlatformToolset>
   </PropertyGroup>
@@ -43,7 +43,7 @@
     <UseDebugLibraries>false</UseDebugLibraries>
     <ConfigurationType>Driver</ConfigurationType>
     <DriverType>KMDF</DriverType>
-    <DriverTargetPlatform>Universal</DriverTargetPlatform>
+    <DriverTargetPlatform>Windows Driver</DriverTargetPlatform>
     <Driver_SpectreMitigation>false</Driver_SpectreMitigation>
     <PlatformToolset>WindowsKernelModeDriver10.0</PlatformToolset>
   </PropertyGroup>
@@ -73,17 +73,19 @@
   <PropertyGroup />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
-    <OutDir>$(SolutionDir)\build\</OutDir>
-    <IntDir>$(SolutionDir)\cache\</IntDir>
+    <OutDir>$(SolutionDir)build/</OutDir>
+    <IntDir>$(SolutionDir)cache/</IntDir>
     <EnableInf2cat>false</EnableInf2cat>
     <TargetName>wkernel</TargetName>
+    <ApiValidator_Enable>false</ApiValidator_Enable>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
-    <OutDir>$(SolutionDir)\build\</OutDir>
-    <IntDir>$(SolutionDir)\cache\</IntDir>
+    <OutDir>$(SolutionDir)build/</OutDir>
+    <IntDir>$(SolutionDir)cache/</IntDir>
     <EnableInf2cat>false</EnableInf2cat>
     <TargetName>wkernel</TargetName>
+    <ApiValidator_Enable>false</ApiValidator_Enable>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
@@ -100,12 +102,15 @@
       <FileDigestAlgorithm>sha256</FileDigestAlgorithm>
     </DriverSign>
     <ClCompile>
-      <LanguageStandard>stdcpp14</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <ClCompile>
-      <LanguageStandard_C>Default</LanguageStandard_C>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <BufferSecurityCheck>false</BufferSecurityCheck>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <EntryPointSymbol>KernelLoad</EntryPointSymbol>
@@ -117,12 +122,15 @@
       <FileDigestAlgorithm>sha256</FileDigestAlgorithm>
     </DriverSign>
     <ClCompile>
-      <LanguageStandard>stdcpp14</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <ClCompile>
-      <LanguageStandard_C>Default</LanguageStandard_C>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <BufferSecurityCheck>false</BufferSecurityCheck>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <EntryPointSymbol>KernelLoad</EntryPointSymbol>
