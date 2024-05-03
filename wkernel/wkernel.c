@@ -9,16 +9,16 @@
 #define IO_READ_KERNEL_MEMORY   CTL_CODE(FILE_DEVICE_UNKNOWN, 0x0003, METHOD_BUFFERED, FILE_SPECIAL_ACCESS)
 #define IO_WRITE_KERNEL_MEMORY  CTL_CODE(FILE_DEVICE_UNKNOWN, 0x0004, METHOD_BUFFERED, FILE_SPECIAL_ACCESS)
 
+UNICODE_STRING deviceName;
+UNICODE_STRING dosDeviceName;
+PDEVICE_OBJECT device;
+
 HANDLE cs2Id;
 PEPROCESS cs2Procces;
 DWORD64 client;
 
 HANDLE cheatId;
 PEPROCESS cheatProcces;
-
-UNICODE_STRING deviceName;
-UNICODE_STRING dosDeviceName;
-PDEVICE_OBJECT device;
 
 //
 typedef struct _KERNEL_INIT_DATA_REQUEST
@@ -73,6 +73,7 @@ NTSTATUS CloseWkernel(PDEVICE_OBJECT device, PIRP irp)
 void InitWkernelData(PIRP irp)
 {
     PKERNEL_INIT_DATA_REQUEST initData = (PKERNEL_INIT_DATA_REQUEST)irp->AssociatedIrp.SystemBuffer;
+
     if (initData)
     {
         cs2Id = (HANDLE)initData->gameId;
@@ -93,6 +94,7 @@ void ImageLoadCallback(PUNICODE_STRING fullName, HANDLE processId, PIMAGE_INFO i
     if (wcsstr(fullName->Buffer, CLIENT_DLL))
     {
         DbgPrintEx(0, 0, "successfully loaded client.dll with base 0x%p", imageInfo->ImageBase);
+
         client = (DWORD64)imageInfo->ImageBase;
     }
 }
@@ -150,7 +152,7 @@ NTSTATUS KernelLoad(PDRIVER_OBJECT driver, PUNICODE_STRING registry)
     RtlInitUnicodeString(&deviceName, DEVICE_NAME);
     RtlInitUnicodeString(&dosDeviceName, DOS_DEVICE_NAME);
 
-    if (NT_SUCCES(IoCreateDevice(driver, 0, &deviceName, FILE_DEVICE_UNKNOWN, FILE_DEVICE_SECURE_OPEN, FALSE, &device)))
+    if (NT_SUCCESS(IoCreateDevice(driver, 0, &deviceName, FILE_DEVICE_UNKNOWN, FILE_DEVICE_SECURE_OPEN, FALSE, &device)))
     {
         IoCreateSymbolicLink(&dosDeviceName, &deviceName);
         DbgPrintEx(0, 0, "successfully bridge created \n");
